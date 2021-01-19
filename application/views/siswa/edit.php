@@ -14,6 +14,10 @@
     <input type="text" name="nama" class="form-control" value="<?= $row['nama'];?>">
   </div>
   <div class="form-group">
+    <label>Tanggal Lahir</label>
+    <input type="date" name="tanggal_lahir" class="form-control" value="<?= $row['tanggal_lahir'];?>">
+  </div>
+  <div class="form-group">
     <label>Jenis Kelamin</label>
     <select name="jenis_kelamin" class="form-control">
       <option value="L" <?= $row['jenis_kelamin'] == 'L' ? 'selected' : '' ;?> >Laki - Laki</option>

@@ -5,6 +5,7 @@ class Siswa extends CI_Controller{
        parent::__construct();
        $this->load->model('siswa_model');
        $this->load->helper('form');
+       $this->load->library('form_validation');
 
     }
     function index(){
@@ -18,7 +19,6 @@ class Siswa extends CI_Controller{
         $this->load->view('siswa/tambah');
     }
     function add_action(){
-        $this->load->library('form_validation');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'required');
         if ($this->form_validation->run() == TRUE) {
@@ -56,20 +56,32 @@ class Siswa extends CI_Controller{
         ];
         $data['edit'] = $this->siswa_model->edit($where, 'siswa')->result_array();
         $this->load->view('siswa/edit', $data);
+        if(count($data['edit']) <= 0){
+            redirect(base_url('siswa'));
+        }
         }
 
     function update(){
+        
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'required');
+        if($this->form_validation->run() == TRUE){
         $id = $this->input->post('id');
         $nama = $this->input->post('nama');
         $jenis_kelamin = $this->input->post('jenis_kelamin');
+        $tanggal_lahir = $this->input->post('tanggal_lahir');
+        
         $where = [
             'id' => $id
         ];
         $data = [
             'nama' => $nama,
-            'jenis_kelamin' => $jenis_kelamin
+            'jenis_kelamin' => $jenis_kelamin,
+            'tanggal_lahir' => $tanggal_lahir
         ];
         $this->session->set_flashdata('respon', 'updated');
         $this->siswa_model->update($where, 'siswa', $data);
+    }
     }
 }
