@@ -47,7 +47,8 @@ class Siswa extends CI_Controller{
             'id' => $id
         );
         $this->siswa_model->delete($where,'siswa');
-    }
+        redirect(base_url('siswa'))
+}
 
 
     function edit($id){
